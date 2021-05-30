@@ -1,0 +1,20 @@
+---
+gce_resource_name: "ansible-gce-instance-gpu"
+gce_instance:
+  name: "{{ gce_resource_name }}"
+  zone: "{{ gce_resource_zone }}"
+  state: present
+  type: n1-standard-1
+  gpu:
+    - accelerator_count: "1"
+      accelerator_type: "{{ gcp_gpu_types.K80 }}"
+  terminate_on_maintenance: yes
+  delete_protection: no
+  service_account: "{{ gce_instance_service_account }}"
+  api_auth:
+    - "{{ gcp_api_scopes.STORAGE_READ_WRITE }}"
+  labels:
+    team: devops
+    application: ansible
+  tags: []
+

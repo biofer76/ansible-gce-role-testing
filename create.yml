@@ -1,0 +1,8 @@
+---
+- name: Create a GCE VM instance through GCE Role 
+  hosts: localhost
+  gather_facts: no
+  vars:
+    gce_instance_service_account: "{{ lookup('env', 'GCP_INSTANCE_SERVICE_ACCOUNT')}}"
+  roles:
+    - role: gce
