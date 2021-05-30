@@ -1,0 +1,11 @@
+---
+- name: Stop a GCE VM instance
+  hosts: localhost
+  gather_facts: no
+  vars:
+    gce_instance_state: stopped
+    gce_disk:
+    gce_network:
+    gce_ip:
+  roles:
+    - role: gce

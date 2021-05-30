@@ -1,0 +1,11 @@
+---
+- name: Start a GCE VM instance
+  hosts: localhost
+  gather_facts: no
+  vars:
+    gce_instance_state: started
+    gce_disk:
+    gce_network:
+    gce_ip:
+  roles:
+    - role: gce
