@@ -1,0 +1,25 @@
+---
+gce_resource_name: ansible-gce-instance-custom-net
+gce_resource_region: europe-west1
+gce_resource_zone: europe-west1-b
+
+gce_instance:
+  name: "{{ gce_resource_name }}"
+  zone: "{{ gce_resource_zone }}"
+  state: present
+  type: n1-standard-1
+  gpu: []
+  terminate_on_maintenance: yes
+  delete_protection: no
+  service_account: "{{ gce_instance_service_account }}"
+  api_auth:
+    - "{{ gcp_api_scopes.STORAGE_READ_WRITE }}"
+  labels:
+    team: devops
+    application: ansible
+  tags: []
+
+### VPC Network
+gce_network:
+  - name: devenv
+    subnetwork: devenv-eu-west1

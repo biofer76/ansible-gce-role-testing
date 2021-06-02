@@ -6,3 +6,33 @@
     gce_instance_service_account: "{{ lookup('env', 'GCP_INSTANCE_SERVICE_ACCOUNT')}}"
   roles:
     - role: gce
+  post_tasks:
+    - name: add instance as new host
+      add_host:
+        hostname: "{{ gce_instance_public_ip }}"
+        groupname: "gce_vm_instance"
+        gce_instance: "{{ gce_instance_result }}"
+        gce_instance_private_ip: "{{ gce_instance_private_ip }}"
+        gce_instance_public_ip: "{{ gce_instance_public_ip }}"
+
+# Run configuration Playbooks
+- name: Waiting GCE instance availability
+  hosts: gce_vm_instance
+  remote_user: ansible
+  gather_facts: no
+  vars:
+    ansible_connection: ssh
+    ansible_private_key_file: "{{ lookup('env', 'ANSIBLE_PRIVATE_KEY') }}"
+  tasks:
+    - name: "Wait SSH to come up..."
+      wait_for_connection:
+        sleep: 10
+        delay: 5
+        timeout: 120
+      tags: always
+    - name: Display Public IP
+      debug:
+        msg: "Public IP {{ gce_instance_public_ip }}"
+    - name: Display Public IP
+      debug:
+        msg: "Private IP {{ gce_instance_private_ip }}"
