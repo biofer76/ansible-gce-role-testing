@@ -4,6 +4,11 @@
   gather_facts: no
   vars:
     gce_instance_service_account: "{{ lookup('env', 'GCP_INSTANCE_SERVICE_ACCOUNT')}}"
+    gcp_dns_name_enabled: true
+    gcp_dns_domain: particles.int
+    gcp_dns_name: particles-int
+    gcp_dns_ttl: 600
+    gcp_dns_private_ip: false
   roles:
     - role: gce
   post_tasks:

@@ -44,7 +44,12 @@ In Playbook files I used a new environment variable to configure the instance se
 GCP_INSTANCE_SERVICE_ACCOUNT=000000000000-compute@developer.gserviceaccount.com
 ```
 
-Run the Ansible Playbook with default values
+Required roles for Ansible service account:
+* Compute Admin
+* DNS Administrator
+* Service Account User
+
+**Run the Ansible Playbook with default values**
 
 ```bash
 ansible-playbook create.yml

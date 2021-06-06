@@ -11,18 +11,26 @@
           zone: "{{ gce_resource_zone }}"
           state: absent
         gce_disk:
-        gce_network:
         gce_ip:
-    # Remove Boot Disk and IP Address
+      tags: instance
+    # Remove Boot Disk (if kept after instance deletion)
     - role: gce
       vars:
         gce_instance:
         gce_disk:
           name: "{{ gce_resource_name }}"
           zone: "{{ gce_resource_zone }}"
-          device: { d0: { state: absent } }
-        gce_network:
+          device: 
+            d0:
+              state: absent
+      tags: disk
+    # Remove IP Address (if allocated previously)
+    - role: gce
+      vars:
+        gce_instance:
+        gce_disk:
         gce_ip:
           name: "{{ gce_resource_name }}"
           region: "{{ gce_resource_region }}"
           state: absent
+      tags: ip
